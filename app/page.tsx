@@ -3,6 +3,7 @@ import { LookingFor } from "@/components/looking-for";
 import { Hero } from "@/components/hero";
 import { LogoList } from "@/components/logo-list";
 import { ProductExperience } from "@/components/product-experience";
+import { MobileApp } from "@/components/mobile-app";
 import { CTA } from "@/components/cta";
 import { Footer } from "@/components/footer";
 import { Testimonial } from "@/components/testimonial";
@@ -16,6 +17,7 @@ export default function Home() {
       <LogoList />
       <ProductExperience />
       <LookingFor />
+      <MobileApp />
       <Testimonial />
       <CTA />
       <Faq />

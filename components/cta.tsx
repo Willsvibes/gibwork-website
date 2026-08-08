@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Smartphone } from "lucide-react";
 import Ripple from "./ui/ripple";
 import { motion } from "framer-motion";
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/framer-variants";
@@ -28,21 +28,35 @@ export function CTA() {
         variants={FADE_UP_ANIMATION_VARIANTS}
         className="font-semibold text-3xl sm:text-4xl text-center"
       >
-        Start with one funded task
+        Ready to start earning or posting work?
       </motion.h2>
       <motion.p
         variants={FADE_UP_ANIMATION_VARIANTS}
-        className="text-center mt-2 text-muted-foreground"
+        className="text-center mt-2 text-muted-foreground max-w-xl text-base sm:text-lg"
       >
-        Open Gibwork to post work, discover bounties, submit deliverables, or
-        track your next payout.
+        Open Gibwork on the web or download the mobile app on iOS and Android to post work, discover bounties, and get paid in crypto.
       </motion.p>
 
-      <motion.div variants={FADE_UP_ANIMATION_VARIANTS}>
-        <Button asChild className="mt-8 group">
+      <motion.div
+        variants={FADE_UP_ANIMATION_VARIANTS}
+        className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md sm:max-w-none relative z-10"
+      >
+        <Button className="group w-full sm:w-auto px-6 h-12 text-base font-medium" size="lg" asChild>
           <Link href={siteConfig.appUrl} target="_blank">
-            Open App
-            <ArrowRight className="size-0 group-hover:size-5 transition-all -ml-2 group-hover:ml-0" />
+            Open Web App
+            <ArrowRight className="size-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </Button>
+        <Button className="w-full sm:w-auto px-5 h-12 text-base font-medium" size="lg" variant="outline" asChild>
+          <Link href={siteConfig.appStoreUrl} target="_blank">
+            <Smartphone className="size-4 mr-2" />
+            Download for iOS
+          </Link>
+        </Button>
+        <Button className="w-full sm:w-auto px-5 h-12 text-base font-medium" size="lg" variant="outline" asChild>
+          <Link href={siteConfig.playStoreUrl} target="_blank">
+            <Smartphone className="size-4 mr-2" />
+            Download for Android
           </Link>
         </Button>
       </motion.div>

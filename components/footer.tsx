@@ -16,16 +16,16 @@ export function Footer() {
         <div className="flex items-start gap-4 w-full justify-between gap-x-40 md:flex-row flex-col gap-y-12">
           <div className="flex items-start flex-col">
             <div className="flex items-center gap-2">
-              <Image alt="" src={logo} className="size-10 rounded-md bg-muted" />
+              <Image alt="Gibwork Logo" src={logo} className="size-10 rounded-md bg-muted" />
               <p className="font-bold text-2xl">gibwork</p>
             </div>
             <h2 className="font-semibold text-2xl sm:text-3xl mt-4">Join our community</h2>
-            <p className="text-muted-foreground sm:text-base text-sm">
-              Meet like-minded people and find work opportunities easily.
+            <p className="text-muted-foreground sm:text-base text-sm max-w-sm">
+              Meet like-minded builders, creators, and operators and find work opportunities easily.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-24">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16">
             <div className="text-sm flex flex-col gap-2 items-start">
               <p className="font-semibold">Quick links</p>
               <Link
@@ -43,13 +43,7 @@ export function Footer() {
                 Testimonial
                 <ArrowRight className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
               </Link>
-              {/* <Link
-                href={"/#team"}
-                className="text-muted-foreground transition-all hover:text-foreground group"
-              >
-                Team
-                <ArrowRight className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
-              </Link> */}
+
               <Link
                 href={"/#faq"}
                 className="text-muted-foreground transition-all hover:text-foreground group"
@@ -59,7 +53,7 @@ export function Footer() {
               </Link>
               <Link
                 href={"https://docs.gib.work/"}
-                 target="_blank"
+                target="_blank"
                 className="text-muted-foreground transition-all hover:text-foreground group"
               >
                 Docs
@@ -68,49 +62,73 @@ export function Footer() {
             </div>
 
             <div className="text-sm flex flex-col gap-2 items-start">
+              <p className="font-semibold">Apps & Mobile</p>
+              <Link
+                href={siteConfig.appUrl}
+                target="_blank"
+                className="text-muted-foreground transition-all hover:text-foreground group"
+              >
+                Web App
+                <ExternalLink className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
+              </Link>
+              <Link
+                href={siteConfig.appStoreUrl}
+                target="_blank"
+                className="text-muted-foreground transition-all hover:text-foreground group"
+              >
+                iOS App Store
+                <ExternalLink className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
+              </Link>
+              <Link
+                href={siteConfig.playStoreUrl}
+                target="_blank"
+                className="text-muted-foreground transition-all hover:text-foreground group"
+              >
+                Google Play
+                <ExternalLink className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
+              </Link>
+            </div>
+
+            <div className="text-sm flex flex-col gap-2 items-start col-span-2 sm:col-span-1">
               <p className="font-semibold">Resources</p>
               <Link
                 href={"https://legal.gib.work/privacy-policy.pdf"}
-                 target="_blank"
+                target="_blank"
                 className="text-muted-foreground transition-all hover:text-foreground group"
               >
                 Privacy Policy
                 <ExternalLink className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
               </Link>
-
-              {/* <Link
-                href={"#"}
-                className="text-muted-foreground transition-all hover:text-foreground group"
-              >
-                Terms of Use
-                <ExternalLink className="inline-block size-4 group-hover:scale-100 scale-0 transition-all ml-1" />
-              </Link> */}
             </div>
           </div>
         </div>
 
-        <div className="flex sm:items-end justify-between mt-12 w-full sm:flex-row flex-col gap-4">
+        <div className="flex sm:items-end justify-between mt-12 w-full sm:flex-row flex-col gap-4 pt-6 border-t">
           <div className="flex items-center gap-4">
             <Link
               href={siteConfig.youtubeUrl}
               target="_blank"
-              className="hover:scale-105 transition-all"
+              className="hover:scale-105 transition-all text-muted-foreground hover:text-foreground"
             >
               <YoutubeLogoMark className="size-5" />
             </Link>
             <Link
               href={siteConfig.discordUrl}
               target="_blank"
-              className="hover:scale-105 transition-all"
+              className="hover:scale-105 transition-all text-muted-foreground hover:text-foreground"
             >
               <DiscordLogoMark className="size-5" />
             </Link>
-            <Link href={siteConfig.xUrl} target="_blank" className="hover:scale-105 transition-all">
+            <Link
+              href={siteConfig.xUrl}
+              target="_blank"
+              className="hover:scale-105 transition-all text-muted-foreground hover:text-foreground"
+            >
               <TwitterLogoMark className="size-5" />
             </Link>
           </div>
 
-          <p className="text-xs text-muted-foreground">Made with ♥ by gibwork</p>
+          <p className="text-xs text-muted-foreground">Made by gibwork</p>
         </div>
       </div>
     </footer>

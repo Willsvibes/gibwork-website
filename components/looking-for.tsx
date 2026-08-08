@@ -10,10 +10,10 @@ import {
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { FADE_UP_ANIMATION_VARIANTS } from "@/lib/framer-variants";
+import { Smartphone } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const workDetails = [
-  // { image: "/tasks/image-04.png", title: "Create a FAQ list for gibwork", amount: 1, token: "sol" },
-
   {
     image: "/tasks/image-01.png",
     title: "Design gibwork's new landing page",
@@ -26,12 +26,6 @@ const workDetails = [
     amount: 500,
     token: "usdc",
   },
-  // {
-  //   image: "/tasks/image-04.png",
-  //   title: "Share a link to your most used dApp",
-  //   amount: 100,
-  //   token: "usdc",
-  // },
   {
     image: "/tasks/image-03.png",
     title: "Use slug- to share a set of links on X or Reddit",
@@ -42,7 +36,7 @@ const workDetails = [
 
 export function LookingFor() {
   return (
-    <section className="relative max-w-5xl mx-auto w-full py-16 sm:py-24 px-4 sm:px-6">
+    <section id="about" className="relative max-w-5xl mx-auto w-full py-16 sm:py-24 px-4 sm:px-6">
       <Tabs defaultValue="1" className="w-full flex flex-col items-center">
         <motion.div
           variants={FADE_UP_ANIMATION_VARIANTS}
@@ -59,6 +53,7 @@ export function LookingFor() {
             </TabsTrigger>
           </TabsList>
         </motion.div>
+
         <TabsContent value="1" className="mt-8 w-full max-w-7xl">
           <motion.div
             initial="hidden"
@@ -93,68 +88,57 @@ export function LookingFor() {
               variants={FADE_UP_ANIMATION_VARIANTS}
               className="grid lg:grid-cols-3 gap-4 mt-8 lg:max-w-full max-w-3xl mx-auto"
             >
-              {/* <Card className="overflow-hidden">
-                <div className="h-32 sm:h-40 bg-muted" />
-                <CardHeader className="border-t">
-                  <CardTitle className="text-lg">Ask a Question</CardTitle>
-                  <CardDescription>
-                    Tap into the network of experts to answer your question fast.
-                  </CardDescription>
-                </CardHeader>
-              </Card> */}
-
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden border bg-card/80 hover:border-primary/40 transition-all">
                 <Image
                   src="https://cdn.gib.work/misc/open_source_bounty.png"
                   alt="Open Source Bounty"
                   className="h-40 w-full object-cover"
-                  width={100}
-                  height={100}
+                  width={400}
+                  height={160}
                 />
                 <CardHeader className="border-t">
                   <CardTitle className="text-lg">Open Source Bounty</CardTitle>
-                  <CardDescription>
-                    Incentivize a pull request from a GitHub issue and reward
-                    the contributor who ships it.
+                  <CardDescription className="text-sm leading-relaxed">
+                    Incentivize code contributions and pull requests from global developers by funding GitHub issues directly.
                   </CardDescription>
                 </CardHeader>
               </Card>
 
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden border bg-card/80 hover:border-primary/40 transition-all">
                 <Image
                   src="https://cdn.gib.work/misc/simple_task.png"
                   alt="Simple Task"
                   className="h-40 w-full object-cover"
-                  width={100}
-                  height={100}
+                  width={400}
+                  height={160}
                 />
                 <CardHeader className="border-t">
                   <CardTitle className="text-lg">Simple Task</CardTitle>
-                  <CardDescription>
-                    Post focused jobs for content, QA, research, testing, growth,
-                    feedback, and community work.
+                  <CardDescription className="text-sm leading-relaxed">
+                    Outsource QA testing, content creation, community engagement, and research with clear, actionable deliverables.
                   </CardDescription>
                 </CardHeader>
               </Card>
-              <Card className="overflow-hidden">
+
+              <Card className="overflow-hidden border bg-card/80 hover:border-primary/40 transition-all">
                 <Image
                   src="https://cdn.gib.work/misc/services.png"
                   alt="Services"
                   className="h-40 w-full object-cover"
-                  width={100}
-                  height={100}
+                  width={400}
+                  height={160}
                 />
                 <CardHeader className="border-t">
                   <CardTitle className="text-lg">Services</CardTitle>
-                  <CardDescription>
-                    Find specialists for custom scopes and repeatable support
-                    without turning every need into a hiring process.
+                  <CardDescription className="text-sm leading-relaxed">
+                    Hire proven specialists for custom deliverables and repeatable support without turning every need into a long hiring process.
                   </CardDescription>
                 </CardHeader>
               </Card>
             </motion.div>
           </motion.div>
         </TabsContent>
+
         <TabsContent value="2" className="mt-8 w-full max-w-3xl">
           <motion.div
             initial="hidden"
@@ -170,12 +154,20 @@ export function LookingFor() {
             }}
             className="flex flex-col items-center"
           >
+            <motion.div variants={FADE_UP_ANIMATION_VARIANTS} className="flex items-center gap-2 mb-2">
+              <Badge variant="outline" className="gap-1.5 py-0.5 text-xs">
+                <Smartphone className="size-3 text-primary" />
+                Also available on the mobile app
+              </Badge>
+            </motion.div>
+
             <motion.h2
               variants={FADE_UP_ANIMATION_VARIANTS}
               className="text-3xl sm:text-4xl text-center font-semibold"
             >
               Complete work from web or mobile
             </motion.h2>
+
             <motion.p
               variants={FADE_UP_ANIMATION_VARIANTS}
               className="text-center mt-2 text-muted-foreground"
@@ -191,24 +183,24 @@ export function LookingFor() {
               {workDetails.map((_detail) => (
                 <Card
                   key={_detail.title}
-                  className="p-4 flex items-center gap-4"
+                  className="p-4 flex items-center gap-4 hover:border-primary/40 transition-all"
                 >
                   <div className="relative aspect-square rounded-full shrink-0 w-12 bg-muted overflow-hidden">
                     <Image
-                      alt=""
+                      alt={_detail.title}
                       fill
                       src={_detail.image}
                       className="h-full w-full object-cover"
                     />
                   </div>
 
-                  <p className="font-semibold grow truncate">{_detail.title}</p>
+                  <p className="font-semibold grow truncate text-sm sm:text-base">{_detail.title}</p>
 
                   <div className="font-semibold flex items-center justify-end gap-2 shrink-0">
-                    <p>{_detail.amount}</p>
-                    <div className="relative aspect-square rounded-full w-8 bg-muted overflow-hidden">
+                    <p className="text-sm sm:text-base">{_detail.amount}</p>
+                    <div className="relative aspect-square rounded-full w-7 bg-muted overflow-hidden">
                       <Image
-                        alt=""
+                        alt={_detail.token}
                         fill
                         src={`/token-${_detail.token}.png`}
                         className="h-full w-full object-cover"

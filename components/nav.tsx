@@ -3,7 +3,7 @@
 import { DiscordLogoMark } from "@/components/logo/discord";
 import { TwitterLogoMark } from "@/components/logo/twitter";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Menu, Smartphone, X, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/work-logo.png";
@@ -12,14 +12,13 @@ import { siteConfig } from "@/lib/site-config";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FADE_IN, FADE_UP_ANIMATION_VARIANTS } from "@/lib/framer-variants";
-import { Separator } from "./ui/separator";
 
 export function Nav() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <nav className=" z-10 border-b bg-background/80 backdrop-blur-sm sticky top-0">
+      <nav className="z-10 border-b bg-background/80 backdrop-blur-sm sticky top-0">
         <motion.div
           variants={FADE_UP_ANIMATION_VARIANTS}
           initial="hidden"
@@ -29,7 +28,7 @@ export function Nav() {
         >
           <div className="flex items-center gap-2">
             <Link href={"/"} className="flex items-center gap-2">
-              <Image alt="" src={logo} className="size-10 rounded-md" />
+              <Image alt="Gibwork logo" src={logo} className="size-10 rounded-md" />
               <p className="font-bold text-3xl min-[420px]:block hidden">gibwork</p>
             </Link>
 
@@ -43,9 +42,6 @@ export function Nav() {
               <Button asChild variant={"ghost"} className="text-muted-foreground text-xs">
                 <Link href={"/#testimonial"}>Testimonial</Link>
               </Button>
-              {/* <Button asChild variant={"ghost"} className="text-muted-foreground text-xs">
-                <Link href={"https://jup.ag/swap/SOL-F7Hwf8ib5DVCoiuyGr618Y3gon429Rnd1r5F9R5upump"} target="_blank">Token</Link>
-              </Button> */}
               <Button asChild variant={"ghost"} className="text-muted-foreground text-xs">
                 <Link href={"/#faq"}>FAQ</Link>
               </Button>
@@ -56,7 +52,7 @@ export function Nav() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="hidden md:flex items-center">
+            <div className="hidden md:flex items-center gap-1">
               <Button size={"icon"} variant={"ghost"} asChild>
                 <Link href={siteConfig.youtubeUrl} target="_blank">
                   <YoutubeLogoMark className="size-5" />
@@ -67,10 +63,24 @@ export function Nav() {
                   <DiscordLogoMark className="size-5" />
                 </Link>
               </Button>
-
               <Button size={"icon"} variant={"ghost"} asChild>
                 <Link href={siteConfig.xUrl} target="_blank">
                   <TwitterLogoMark className="size-5" />
+                </Link>
+              </Button>
+            </div>
+
+            <div className="hidden lg:flex items-center gap-1.5 ml-1">
+              <Button size={"sm"} variant={"outline"} asChild className="gap-1.5 text-xs">
+                <Link href={siteConfig.appStoreUrl} target="_blank">
+                  <Smartphone className="size-3.5" />
+                  iOS
+                </Link>
+              </Button>
+              <Button size={"sm"} variant={"outline"} asChild className="gap-1.5 text-xs">
+                <Link href={siteConfig.playStoreUrl} target="_blank">
+                  <Smartphone className="size-3.5" />
+                  Android
                 </Link>
               </Button>
             </div>
@@ -101,101 +111,110 @@ export function Nav() {
             initial="hidden"
             animate="show"
             exit="hidden"
-            className="fixed inset-0 bg-background z-10 overflow-auto"
+            className="fixed inset-0 bg-background/95 backdrop-blur-md z-50 overflow-y-auto"
           >
-            <div className="flex flex-col">
-              <div className="sm:px-6 px-4 h-16 flex justify-between items-center">
-                <Link href={"/"} className="flex items-center gap-2">
-                  <Image alt="" src={logo} className="size-10 rounded-md" />
-                  <p className="font-bold text-xl min-[420px]:block hidden">gibwork</p>
+            <div className="flex flex-col min-h-screen">
+              {/* Header */}
+              <div className="px-4 h-16 flex justify-between items-center border-b">
+                <Link href={"/"} onClick={() => setIsOpen(false)} className="flex items-center gap-2">
+                  <Image alt="Gibwork logo" src={logo} className="size-9 rounded-md" />
+                  <p className="font-bold text-xl">gibwork</p>
                 </Link>
 
-                <div className="flex items-center gap-2">
-                  <Button asChild className="group">
-                    <Link href={siteConfig.appUrl} target="_blank">
-                      Open App
-                      <ArrowRight className="size-0 group-hover:size-5 transition-all -ml-2 group-hover:ml-0" />
+                <Button size={"icon"} variant={"ghost"} onClick={() => setIsOpen(false)}>
+                  <X className="size-6" />
+                </Button>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="flex flex-col p-6 space-y-4">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Navigation</p>
+                <div className="flex flex-col space-y-2 text-lg font-medium">
+                  <Link
+                    href={"/#about"}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2 border-b border-border/40 text-foreground/90 hover:text-primary transition-colors flex items-center justify-between"
+                  >
+                    <span>About</span>
+                    <ArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                  <Link
+                    href={"/#product"}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2 border-b border-border/40 text-foreground/90 hover:text-primary transition-colors flex items-center justify-between"
+                  >
+                    <span>Product</span>
+                    <ArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                  <Link
+                    href={"/#testimonial"}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2 border-b border-border/40 text-foreground/90 hover:text-primary transition-colors flex items-center justify-between"
+                  >
+                    <span>Testimonial</span>
+                    <ArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                  <Link
+                    href={"/#faq"}
+                    onClick={() => setIsOpen(false)}
+                    className="py-2 border-b border-border/40 text-foreground/90 hover:text-primary transition-colors flex items-center justify-between"
+                  >
+                    <span>FAQ</span>
+                    <ArrowRight className="size-4 text-muted-foreground" />
+                  </Link>
+                  <Link
+                    href={"https://docs.gib.work/"}
+                    target="_blank"
+                    onClick={() => setIsOpen(false)}
+                    className="py-2 border-b border-border/40 text-foreground/90 hover:text-primary transition-colors flex items-center justify-between"
+                  >
+                    <span>Docs</span>
+                    <ExternalLink className="size-4 text-muted-foreground" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* App Downloads & Action Buttons */}
+              <div className="px-6 py-4 flex flex-col space-y-3">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary">Get Gibwork</p>
+                
+                <Button asChild size="lg" className="w-full justify-center font-semibold">
+                  <Link href={siteConfig.appUrl} target="_blank">
+                    Open Web App
+                    <ArrowRight className="size-4 ml-2" />
+                  </Link>
+                </Button>
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  <Button variant="outline" size="sm" asChild className="w-full justify-center gap-1.5 text-xs h-10">
+                    <Link href={siteConfig.appStoreUrl} target="_blank">
+                      <Smartphone className="size-4 text-primary" />
+                      App Store (iOS)
                     </Link>
                   </Button>
-
-                  <Button size={"icon"} variant={"secondary"} onClick={() => setIsOpen(false)}>
-                    <X className="size-5" />
+                  <Button variant="outline" size="sm" asChild className="w-full justify-center gap-1.5 text-xs h-10">
+                    <Link href={siteConfig.playStoreUrl} target="_blank">
+                      <Smartphone className="size-4 text-primary" />
+                      Google Play
+                    </Link>
                   </Button>
                 </div>
               </div>
 
-              <div className="flex items-end flex-col sm:p-6 p-4">
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"/#about"}>About</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"/#product"}>Product</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"/#testimonial"}>Testimonial</Link>
-                </Button>
-                {/* <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"/#team"}>Team</Link>
-                </Button> */}
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"/#faq"}>FAQ</Link>
-                </Button>
-                <Button
-                  asChild
-                  variant={"ghost"}
-                  onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground uppercase"
-                >
-                  <Link href={"https://docs.gib.work/"} target="_blank">
-                    Docs
-                  </Link>
-                </Button>
-              </div>
-
-              <Separator />
-
-              <div className="flex justify-end sm:p-6 p-4">
-                <Button size={"icon"} variant={"ghost"} asChild>
-                  <Link href={siteConfig.youtubeUrl} target="_blank">
+              {/* Footer Socials */}
+              <div className="mt-auto p-6 border-t flex items-center justify-between">
+                <p className="text-xs text-muted-foreground">(c) gibwork</p>
+                <div className="flex items-center gap-3">
+                  <Link href={siteConfig.youtubeUrl} target="_blank" className="p-2 text-muted-foreground hover:text-foreground">
                     <YoutubeLogoMark className="size-5" />
                   </Link>
-                </Button>
-                <Button size={"icon"} variant={"ghost"} asChild>
-                  <Link href={siteConfig.discordUrl} target="_blank">
+                  <Link href={siteConfig.discordUrl} target="_blank" className="p-2 text-muted-foreground hover:text-foreground">
                     <DiscordLogoMark className="size-5" />
                   </Link>
-                </Button>
-
-                <Button size={"icon"} variant={"ghost"} asChild>
-                  <Link href={siteConfig.xUrl} target="_blank">
+                  <Link href={siteConfig.xUrl} target="_blank" className="p-2 text-muted-foreground hover:text-foreground">
                     <TwitterLogoMark className="size-5" />
                   </Link>
-                </Button>
+                </div>
               </div>
             </div>
           </motion.div>

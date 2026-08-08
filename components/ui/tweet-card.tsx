@@ -80,54 +80,53 @@ export const TweetNotFound = ({
 }) => (
   <div
     className={cn(
-      "flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-4",
+      "flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border p-4 bg-card/40",
       className
     )}
     {...props}
   >
-    <h3>Tweet not found</h3>
+    <p className="text-sm text-muted-foreground">Tweet currently unavailable</p>
   </div>
 );
 
 export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
   <div className="flex flex-row justify-between tracking-tight">
     <div className="flex items-center space-x-2">
-      <a href={tweet.user.url} target="_blank" rel="noreferrer">
+      <a href={tweet.user?.url || "#"} target="_blank" rel="noreferrer">
         <img
-          title={`Profile picture of ${tweet.user.name}`}
-          alt={tweet.user.screen_name}
+          title={`Profile picture of ${tweet.user?.name || "User"}`}
+          alt={tweet.user?.screen_name || "user"}
           height={48}
           width={48}
-          src={tweet.user.profile_image_url_https}
+          src={tweet.user?.profile_image_url_https}
           className="overflow-hidden rounded-full border border-transparent"
         />
       </a>
       <div>
         <a
-          href={tweet.user.url}
+          href={tweet.user?.url || "#"}
           target="_blank"
           rel="noreferrer"
           className="flex items-center whitespace-nowrap font-semibold"
         >
-          {truncate(tweet.user.name, 20)}
-          {tweet.user.verified ||
-            (tweet.user.is_blue_verified && (
-              <Verified className="ml-1 inline h-4 w-4 text-blue-500" />
-            ))}
+          {truncate(tweet.user?.name || "Gibwork User", 20)}
+          {(tweet.user?.verified || tweet.user?.is_blue_verified) && (
+            <Verified className="ml-1 inline h-4 w-4 text-blue-500" />
+          )}
         </a>
         <div className="flex items-center space-x-1">
           <a
-            href={tweet.user.url}
+            href={tweet.user?.url || "#"}
             target="_blank"
             rel="noreferrer"
-            className="text-sm text-gray-500 transition-all duration-75"
+            className="text-sm text-muted-foreground transition-all duration-75"
           >
-            @{truncate(tweet.user.screen_name, 16)}
+            @{truncate(tweet.user?.screen_name || "gibwork", 16)}
           </a>
         </div>
       </div>
     </div>
-    <a href={tweet.url} target="_blank" rel="noreferrer">
+    <a href={tweet.url || "#"} target="_blank" rel="noreferrer">
       <span className="sr-only">Link to tweet</span>
       <Twitter className="h-5 w-5 items-start text-[#3BA9EE] transition-all ease-in-out hover:scale-105" />
     </a>
@@ -136,33 +135,36 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
 
 export const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
   <div className="break-words leading-normal tracking-tighter">
-    {tweet.entities.map((entity, idx) => {
-      switch (entity.type) {
-        case "url":
-        case "symbol":
-        case "hashtag":
-        case "mention":
-          return (
-            <a
-              key={idx}
-              href={entity.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-normal text-gray-500"
-            >
-              <span>{entity.text}</span>
-            </a>
-          );
-        case "text":
-          return (
-            <span
-              key={idx}
-              className="text-sm font-normal"
-              dangerouslySetInnerHTML={{ __html: entity.text }}
-            />
-          );
-      }
-    })}
+    {Array.isArray(tweet?.entities) &&
+      tweet.entities.map((entity, idx) => {
+        switch (entity.type) {
+          case "url":
+          case "symbol":
+          case "hashtag":
+          case "mention":
+            return (
+              <a
+                key={idx}
+                href={entity.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-normal text-primary hover:underline"
+              >
+                <span>{entity.text}</span>
+              </a>
+            );
+          case "text":
+            return (
+              <span
+                key={idx}
+                className="text-sm font-normal"
+                dangerouslySetInnerHTML={{ __html: entity.text }}
+              />
+            );
+          default:
+            return null;
+        }
+      })}
   </div>
 );
 
@@ -188,7 +190,7 @@ export const TweetMedia = ({ tweet }: { tweet: EnrichedTweet }) => (
           <img
             key={photo.url}
             src={photo.url}
-            title={"Photo by " + tweet.user.name}
+            title={"Photo by " + tweet.user?.name}
             alt={tweet.text}
             className="h-64 w-5/6 shrink-0 snap-center snap-always rounded-xl border object-cover shadow-sm"
           />
@@ -199,7 +201,7 @@ export const TweetMedia = ({ tweet }: { tweet: EnrichedTweet }) => (
     {!tweet.video &&
       !tweet.photos &&
       // @ts-ignore
-      tweet?.card?.binding_values?.thumbnail_image_large?.image_value.url && (
+      tweet?.card?.binding_values?.thumbnail_image_large?.image_value?.url && (
         <img
           // @ts-ignore
           src={tweet.card.binding_values.thumbnail_image_large.image_value.url}
@@ -219,20 +221,32 @@ export const MagicTweet = ({
   components?: TwitterComponents;
   className?: string;
 }) => {
-  const enrichedTweet = enrichTweet(tweet);
-  return (
-    <div
-      className={cn(
-        "relative flex h-full w-full max-w-[32rem] flex-col gap-2 rounded-lg border p-4 backdrop-blur-md shadow-sm",
-        className
-      )}
-      {...props}
-    >
-      <TweetHeader tweet={enrichedTweet} />
-      <TweetBody tweet={enrichedTweet} />
-      {/* <TweetMedia tweet={enrichedTweet} /> */}
-    </div>
-  );
+  if (!tweet) return null;
+
+  try {
+    const defaultEntities = { hashtags: [], urls: [], user_mentions: [], symbols: [] };
+    const safeTweet = {
+      ...tweet,
+      entities: tweet.entities ? { ...defaultEntities, ...tweet.entities } : defaultEntities,
+    };
+    const enrichedTweet = enrichTweet(safeTweet as unknown as Tweet);
+
+    return (
+      <div
+        className={cn(
+          "relative flex h-full w-full max-w-[32rem] flex-col gap-2 rounded-lg border p-4 backdrop-blur-md shadow-sm bg-card/60 hover:border-primary/40 transition-all",
+          className
+        )}
+        {...props}
+      >
+        <TweetHeader tweet={enrichedTweet} />
+        <TweetBody tweet={enrichedTweet} />
+      </div>
+    );
+  } catch (error) {
+    const NotFound = components?.TweetNotFound || TweetNotFound;
+    return <NotFound {...props} />;
+  }
 };
 
 /**

@@ -130,7 +130,7 @@ export function ProductExperience() {
 
             <Button className="mt-6 w-full" asChild>
               <Link href={siteConfig.appStoreUrl} target="_blank">
-                View iPhone app
+                View mobile app
                 <Smartphone className="size-4" />
               </Link>
             </Button>
